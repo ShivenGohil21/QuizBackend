@@ -123,10 +123,9 @@ EMAIL_BACKEND = 'quiz.backends.UnverifiedEmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-# ⚠️ IMPORTANT: EMAIL_HOST_USER must be exactly ONE email address. 
-# This is the account used to LOG IN to Google's server.
-EMAIL_HOST_USER = 'quizportal2122@gmail.com'
-EMAIL_HOST_PASSWORD = 'xcre bnda ijen qrup'
+# EMAIL_HOST_USER and EMAIL_HOST_PASSWORD are now read from Environment Variables for security
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'quizportal2122@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'xcre bnda ijen qrup')
 
 # The display name and 'From' address shown to users
 # We include both emails in the display name as requested, but specify one for the actual delivery
