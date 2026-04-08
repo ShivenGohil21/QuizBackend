@@ -10,9 +10,11 @@ SECRET_KEY = 'django-insecure-5*t%0-!xtdtc)4=m#0nxea&6eowzj4m)df1sz(*13uligfb^k=
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
+# In production, Render provides RENDER_EXTERNAL_HOSTNAME
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    ALLOWED_HOSTS.append(f"{RENDER_EXTERNAL_HOSTNAME}.onrender.com")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -130,3 +132,25 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'xcre bnda ijen qrup
 # The display name and 'From' address shown to users
 # We include both emails in the display name as requested, but specify one for the actual delivery
 DEFAULT_FROM_EMAIL = '"QuizPortal" <quizportal2122@gmail.com>'
+
+# ✅ Logging configuration to catch errors in production
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+    },
+}
