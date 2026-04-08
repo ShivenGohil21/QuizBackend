@@ -67,6 +67,9 @@ DATABASES = {
     )
 }
 
+# ✅ Required for Supabase Transaction Pooler (port 6543)
+DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS'] = True
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
